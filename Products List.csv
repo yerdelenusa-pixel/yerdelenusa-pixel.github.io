@@ -1,5 +1,6 @@
 IMG,PRODUCT,Price,In Stock,
 ,Ground beef (per pound),$10.00,TRUE,
+,Ground beef (per libre),$12.00,TRUE,
 ,Stew meat (per pound),$8.00,TRUE,
 ,"Stake (Rib eye, Newyork etc. - beef - per pound)",$11.00,FALSE,
 ,Flet Mignon (Tenderloin - per pound),$14.00,FALSE,
