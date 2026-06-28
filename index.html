@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)https://lessontime.ai/indygoods/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>The Market List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+<link href="./The Market List_files/css2" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4ecdd; --paper:#fbf6ec; --card:#fffdf8; --ink:#2e2017; --ink2:#6b5844;
+  --line:#e2d4bd; --barn:#9c3024; --barn2:#b8463a; --wheat:#c69214; --wheat2:#e0aa2e;
+  --sage:#5c6e4f; --shadow:0 2px 6px rgba(70,48,24,.08);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Inter',-apple-system,sans-serif; background:var(--bg); color:var(--ink);
+  min-height:100dvh; padding-bottom:96px;
+  background-image:radial-gradient(rgba(156,48,36,.025) 1px,transparent 1px);
+  background-size:18px 18px;
+}
+header{
+  position:sticky; top:0; z-index:20; background:rgba(244,236,221,.95);
+  backdrop-filter:blur(10px); border-bottom:1px solid var(--line); padding:16px 16px 12px;
+}
+.brand{display:flex; align-items:center; gap:10px; margin:0 0 12px}
+.brand .logo{
+  width:38px; height:38px; border-radius:10px; background:var(--barn); color:var(--paper);
+  display:grid; place-items:center; font-size:20px; box-shadow:var(--shadow);
+}
+.brand h1{margin:0; font-family:'DM Serif Display',serif; font-size:23px; font-weight:400; letter-spacing:.3px; line-height:1}
+.brand .sub{font-size:11px; color:var(--ink2); letter-spacing:2px; text-transform:uppercase; margin-top:3px}
+.search{
+  width:100%; padding:12px 16px; border-radius:12px; border:1px solid var(--line);
+  background:var(--paper); color:var(--ink); font-size:15px; outline:none; font-family:inherit;
+}
+.search::placeholder{color:#a89578}
+.search:focus{border-color:var(--barn); box-shadow:0 0 0 3px rgba(156,48,36,.1)}
+.grid{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:11px; padding:14px 12px;
+}
+.item{
+  background:var(--card); border:1px solid var(--line); border-radius:16px; padding:11px;
+  display:flex; flex-direction:column; box-shadow:var(--shadow); position:relative; overflow:hidden;
+}
+.item.sel{border-color:var(--barn); box-shadow:0 0 0 2px rgba(156,48,36,.18)}
+.item.out{opacity:.62}
+.item.out .add{background:#d8cbb4; cursor:not-allowed}
+.item.out .stock{font-size:11px; color:#a88568; line-height:1.3; margin-top:2px}
+.av{
+  height:84px; border-radius:11px; display:grid; place-items:center;
+  font-family:'DM Serif Display',serif; font-size:42px; color:var(--paper);
+  background:linear-gradient(150deg,var(--wheat2),var(--wheat)); margin-bottom:9px;
+}
+.av.c1{background:linear-gradient(150deg,#b8463a,#9c3024)}
+.av.c2{background:linear-gradient(150deg,#6f8059,#5c6e4f)}
+.av.c3{background:linear-gradient(150deg,#e0aa2e,#c69214)}
+.av.c4{background:linear-gradient(150deg,#c88a4a,#a8692f)}
+.av img{width:100%; height:100%; object-fit:cover; border-radius:11px; display:block}
+.crow .cav img{width:100%; height:100%; object-fit:cover; border-radius:11px; display:block}
+.nm{font-size:12.5px; line-height:1.3; font-weight:500; flex:1; margin-bottom:7px}
+.foot{display:flex; align-items:center; justify-content:space-between; gap:6px}
+.pr{font-family:'DM Serif Display',serif; font-size:17px; color:var(--barn)}
+.add{
+  width:34px; height:34px; border:none; border-radius:10px; background:var(--barn); color:var(--paper);
+  font-size:21px; font-weight:600; display:grid; place-items:center; cursor:pointer; flex:0 0 auto;
+}
+.add:active{transform:scale(.9)}
+.qty{display:flex; align-items:center; gap:2px; background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:2px}
+.qty button{width:28px; height:28px; border:none; border-radius:7px; background:var(--barn); color:var(--paper); font-size:17px; font-weight:700; cursor:pointer}
+.qty button:active{background:var(--barn2)}
+.qn{min-width:24px; text-align:center; font-size:14px; font-weight:700}
+.bar{
+  position:fixed; bottom:0; left:0; right:0; z-index:30; background:var(--paper);
+  border-top:1px solid var(--line); padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  display:flex; align-items:center; gap:12px; box-shadow:0 -4px 16px rgba(70,48,24,.07);
+}
+.bar .total{flex:1}
+.bar .lbl{font-size:10px; color:var(--ink2); text-transform:uppercase; letter-spacing:1.5px}
+.bar .amt{font-family:'DM Serif Display',serif; font-size:24px; color:var(--barn); line-height:1.1}
+.bar .cnt{font-size:11px; color:var(--ink2)}
+.viewbtn{
+  border:none; border-radius:13px; background:var(--barn); color:var(--paper); font-weight:700;
+  font-size:15px; padding:14px 22px; cursor:pointer; font-family:inherit;
+}
+.viewbtn:disabled{background:#d8cbb4; color:#9a8a72}
+.overlay{position:fixed; inset:0; z-index:50; background:rgba(46,32,23,.5); display:none; align-items:flex-end; justify-content:center; opacity:0; transition:opacity .25s}
+.overlay.on{display:flex; opacity:1}
+.sheet{
+  width:100%; max-width:560px; max-height:90dvh; background:var(--paper);
+  border-radius:24px 24px 0 0; display:flex; flex-direction:column;
+  transform:translateY(100%); transition:transform .3s cubic-bezier(.32,.72,0,1);
+  box-shadow:0 -14px 44px rgba(46,32,23,.3);
+}
+.overlay.on .sheet{transform:translateY(0)}
+.grab{width:40px; height:5px; border-radius:3px; background:var(--line); margin:11px auto 4px}
+.shead{padding:6px 18px 14px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line)}
+.shead h2{margin:0; font-family:'DM Serif Display',serif; font-size:22px; font-weight:400}
+.shead .hcount{font-size:12px; color:var(--ink2); letter-spacing:1px; text-transform:uppercase; margin-top:2px}
+.x{background:var(--bg); border:none; color:var(--ink); width:34px; height:34px; border-radius:50%; font-size:21px; cursor:pointer; display:grid; place-items:center}
+.cartrows{overflow:auto; padding:12px 14px 6px; -webkit-overflow-scrolling:touch}
+.crow{display:flex; align-items:center; gap:12px; padding:11px; margin-bottom:9px; background:var(--card); border:1px solid var(--line); border-radius:15px; box-shadow:var(--shadow)}
+.crow .cav{flex:0 0 44px; height:44px; width:44px; border-radius:11px; display:grid; place-items:center; font-family:'DM Serif Display',serif; font-size:21px; color:var(--paper); background:linear-gradient(150deg,var(--wheat2),var(--wheat))}
+.crow .cav.c1{background:linear-gradient(150deg,#b8463a,#9c3024)}
+.crow .cav.c2{background:linear-gradient(150deg,#6f8059,#5c6e4f)}
+.crow .cav.c3{background:linear-gradient(150deg,#e0aa2e,#c69214)}
+.crow .cav.c4{background:linear-gradient(150deg,#c88a4a,#a8692f)}
+.crow .cmid{flex:1; min-width:0}
+.crow .cn{font-size:13px; line-height:1.3; font-weight:500}
+.crow .cunit{font-size:11.5px; color:var(--ink2); margin-top:2px}
+.crow .cright{display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex:0 0 auto}
+.crow .cp{font-family:'DM Serif Display',serif; font-size:16px; color:var(--barn)}
+.crow .cqty{display:flex; align-items:center; gap:2px; background:var(--paper); border:1px solid var(--line); border-radius:9px; padding:2px}
+.crow .cqty button{width:26px; height:26px; border:none; border-radius:7px; background:var(--barn); color:var(--paper); font-size:15px; font-weight:700; cursor:pointer}
+.crow .cqty .trash{background:transparent; color:var(--barn)}
+.crow .cqty .cqn{min-width:22px; text-align:center; font-size:14px; font-weight:700}
+.empty{padding:54px 20px; text-align:center; color:var(--ink2); font-size:14px}
+.empty .big{font-size:38px; display:block; margin-bottom:8px}
+.summary{padding:12px 18px 4px; border-top:1px solid var(--line)}
+.stot{display:flex; justify-content:space-between; align-items:baseline}
+.stot span:first-child{font-size:14px; color:var(--ink2); text-transform:uppercase; letter-spacing:1px}
+.stot .samt{font-family:'DM Serif Display',serif; font-size:26px; color:var(--barn)}
+.actions{padding:12px 18px calc(18px + env(safe-area-inset-bottom)); display:flex; gap:10px}
+.actions button{padding:15px; border-radius:14px; border:none; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; display:flex; align-items:center; justify-content:center; gap:7px}
+.actions button:active{transform:scale(.97)}
+.copy{flex:2; background:var(--barn); color:var(--paper)}
+.clear{flex:1; background:var(--bg); color:var(--ink); border:1px solid var(--line) !important}
+.toast{position:fixed; bottom:104px; left:50%; transform:translateX(-50%); z-index:99; background:var(--ink); color:var(--paper); padding:11px 20px; border-radius:22px; font-weight:600; font-size:14px; opacity:0; pointer-events:none; transition:opacity .2s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">🌾</div>
+    <div>
+      <h1>The Market List</h1>
+      <div class="sub">Indiana Dostlari</div>
+    </div>
+  </div>
+  <input class="search" id="q" placeholder="Search the market…" oninput="render()">
+</header>
+
+<div class="grid" id="list"></div>
+
+<div class="bar">
+  <div class="total">
+    <div class="lbl">Total</div>
+    <div class="amt" id="total">$0.00</div>
+    <div class="cnt" id="cnt">0 items</div>
+  </div>
+  <button class="viewbtn" id="vbtn" onclick="openSheet()" disabled="">View List</button>
+</div>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeSheet()">
+  <div class="sheet">
+    <div class="grab"></div>
+    <div class="shead">
+      <div><h2>My List</h2><div class="hcount" id="hcount">0 items</div></div>
+      <button class="x" onclick="closeSheet()">×</button>
+    </div>
+    <div class="cartrows" id="cartrows"></div>
+    <div class="summary">
+      <div class="stot"><span>Total</span><span class="samt" id="stotal">$0.00</span></div>
+    </div>
+    <div class="actions">
+      <button class="clear" onclick="clearCart()">Clear</button>
+      <button class="copy" onclick="copyList()">📋 Copy &amp; Send</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const CSV_URL = 'Products List.csv';
+const IMG_DIR = 'img/';
+
+function parseCsv(text){
+  const rows=[];
+  let cell='';
+  let row=[];
+  let inQuote=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(ch==="\""){
+      if(inQuote && text[i+1]==="\""){
+        cell+="\"";
+        i++;
+      } else {
+        inQuote=!inQuote;
+      }
+      continue;
+    }
+    if(!inQuote && (ch===','||ch==='\r'||ch==='\n')){
+      row.push(cell);
+      cell='';
+      if(ch==='\r'){
+        if(text[i+1]==='\n') i++;
+        rows.push(row);
+        row=[];
+      } else if(ch==='\n'){
+        rows.push(row);
+        row=[];
+      }
+      continue;
+    }
+    cell+=ch;
+  }
+  if(cell||row.length){
+    row.push(cell);
+    rows.push(row);
+  }
+  return rows;
+}
+
+// Each product: [name, price, inStock, imgId]
+let PRODUCTS = [];
+const cart = {};
+
+function fmt(n){return '$'+n.toFixed(2)}
+function firstLetter(s){const m=s.match(/[A-Za-z]/);return (m?m[0]:s[0]).toUpperCase()}
+function avClass(i){return 'c'+((i%4)+1)}
+
+function avHtml(p,i,cls){
+  const letter=firstLetter(p[0]);
+  if(p[3]){
+    return `<div class="${cls} ${avClass(i)}"><img src="${IMG_DIR}${p[3]}.jpg" alt="${p[0]}" loading="lazy" onerror="this.remove();this.parentNode.textContent='${letter}'"></div>`;
+  }
+  return `<div class="${cls} ${avClass(i)}">${letter}</div>`;
+}
+
+function render(){
+  const q=document.getElementById('q').value.trim().toLowerCase();
+  const list=document.getElementById('list');
+  list.innerHTML='';
+  PRODUCTS.forEach((p,i)=>{
+    if(q && !p[0].toLowerCase().includes(q)) return;
+    const qty=cart[i]||0;
+    const outOfStock=!p[2];
+    const el=document.createElement('div');
+    el.className='item'+(qty>0?' sel':'')+(outOfStock?' out':'');
+    el.innerHTML=`
+      ${avHtml(p,i,'av')}
+      <div class="nm">${p[0]}</div>
+      <div class="foot">
+        <span class="pr">${fmt(p[1])}</span>
+        ${qty>0?`<div class="qty">
+          <button onclick="chg(${i},-1)">&minus;</button>
+          <span class="qn">${qty}</span>
+          <button onclick="chg(${i},1)">+</button>
+        </div>`:(outOfStock?`<div class="stock">Out of stock</div>`:`<button class="add" onclick="chg(${i},1)">+</button>`) }
+      </div>`;
+    list.appendChild(el);
+  });
+  updateBar();
+}
+
+function chg(i,d){
+  cart[i]=(cart[i]||0)+d;
+  if(cart[i]<=0) delete cart[i];
+  render();
+  if(document.getElementById('overlay').classList.contains('on')) renderCart();
+}
+
+function totals(){let sum=0,cnt=0;for(const i in cart){sum+=PRODUCTS[i][1]*cart[i];cnt+=cart[i];}return {sum,cnt};}
+
+function updateBar(){
+  const {sum,cnt}=totals();
+  document.getElementById('total').textContent=fmt(sum);
+  document.getElementById('cnt').textContent=cnt+(cnt===1?' item':' items');
+  document.getElementById('vbtn').disabled=cnt===0;
+}
+
+function openSheet(){renderCart();document.getElementById('overlay').classList.add('on')}
+function closeSheet(){document.getElementById('overlay').classList.remove('on')}
+
+function renderCart(){
+  const rows=document.getElementById('cartrows');
+  const keys=Object.keys(cart);
+  const {cnt}=totals();
+  document.getElementById('hcount').textContent=cnt+(cnt===1?' item':' items');
+  if(!keys.length){rows.innerHTML='<div class="empty"><span class="big">&#129380;</span>Your list is empty</div>';document.getElementById('stotal').textContent='$0.00';return;}
+  rows.innerHTML='';
+  keys.forEach(i=>{
+    const p=PRODUCTS[i],q=cart[i];
+    const el=document.createElement('div');
+    el.className='crow';
+    el.innerHTML=`
+      ${avHtml(p,i,'cav')}
+      <div class="cmid"><div class="cn">${p[0]}</div><div class="cunit">${fmt(p[1])} each</div></div>
+      <div class="cright">
+        <div class="cp">${fmt(p[1]*q)}</div>
+        <div class="cqty">
+          <button class="${q===1?'trash':''}" onclick="chg(${i},-1)">${q===1?'&#128465;':'&minus;'}</button>
+          <span class="cqn">${q}</span>
+          <button onclick="chg(${i},1)">+</button>
+        </div>
+      </div>`;
+    rows.appendChild(el);
+  });
+  document.getElementById('stotal').textContent=fmt(totals().sum);
+}
+
+function clearCart(){for(const k in cart)delete cart[k];render();renderCart();}
+
+function buildText(){
+  let t='\u{1F33E} The Market List\n\n';
+  for(const i in cart){const p=PRODUCTS[i],q=cart[i];t+=`• ${p[0]} ×${q} — ${fmt(p[1]*q)}\n`;}
+  t+=`\nTotal: ${fmt(totals().sum)}`;
+  return t;
+}
+
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1600);}
+
+function copyList(){
+  const txt=buildText();
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(()=>toast('Copied!')).catch(()=>fallback(txt));
+  }else fallback(txt);
+}
+function fallback(txt){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Copied!')}catch(e){toast('Copy failed')}document.body.removeChild(ta);}
+
+function loadProducts(){
+  fetch(CSV_URL)
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.text(); })
+    .then(text=>{
+      PRODUCTS = parseCsv(text)
+        .slice(1)
+        .map(cols=>{
+          const img=(cols[0]||'').trim();
+          const name=(cols[1]||'').trim();
+          const price=parseFloat((cols[2]||'').replace(/[^0-9.]+/g,''));
+          const stock=String(cols[3]||'').trim().toUpperCase()==='TRUE';
+          return [name, isNaN(price)?0:price, stock, img];
+        })
+        .filter(p=>p[0]);
+      render();
+    })
+    .catch(err=>{
+      console.error('Failed to load products:',err);
+      document.getElementById('list').innerHTML='<div class="empty"><span class="big">&#9888;&#65039;</span>Could not load product list.</div>';
+    });
+}
+
+loadProducts();
+</script>
+
+</body></html>
